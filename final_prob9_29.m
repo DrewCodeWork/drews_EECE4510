@@ -28,12 +28,14 @@ sw = sw/max(sw) ; % scale the waveform in range [-1, 1]
 t = [0:pts-1]*T;
 figure();
 plot(t, sw);
-xlabel("Time t (s)"), title("Initial Sawtooth waveform")
+xlabel("Time t (s)"), grid on
+title("Initial Sawtooth waveform")
 ylim([-1 1])
 
 figure();   % Closeup view
 plot(t, sw);
-xlabel("Time t (s)"), title("Initial Sawtooth waveform (zoom in)")
+xlabel("Time t (s)"), grid on
+title("Initial Sawtooth waveform (zoom in)")
 xlim([0 0.01]),ylim([-1 1])
 
 % Play waveform as sound
@@ -56,11 +58,13 @@ s2 = filter(num2, den2, sw);
 % Plot the waveform
 figure();
 plot(t, s2);
-xlabel("Time t (s)"), title("Filtered Sawtooth waveform")
+xlabel("Time t (s)"), grid on
+title("Filtered Sawtooth waveform")
 
 figure();   % Closeup view
 plot(t, s2);
-xlabel("Time t (s)"), title("Filtered Sawtooth waveform (zoom in)")
+xlabel("Time t (s)"), grid on
+title("Filtered Sawtooth waveform (zoom in)")
 xlim([0 0.01])
 
 % Play signal with peaking equalizer filter
@@ -78,24 +82,29 @@ FXs2 = fftshift(Fs2);
 % Plot sawtooth freq spectrum
 figure();
 plot(abs(FXsw));
-xlabel("Freq (Hz)"), title("Initial Sawtooth Wave")
+xlabel("Freq (Hz)"), grid on
+title("Initial Sawtooth Wave")
 
 figure();
 plot(abs(FXs2));
-xlabel("Freq (Hz)"), title("Filtered Sawtooth Wave")
+xlabel("Freq (Hz)"), grid on
+title("Filtered Sawtooth Wave")
 
 % Plot filter freq response
 [H f] = freqz(num2,den2,1024,fs);
-figure();
+figure(); grid on
 plot(f,abs(H));
-xlabel("Freq (Hz)"), title("Peaking Equalizer Filter")
+xlabel("Freq (Hz)"), ylabel("Magnitude")
+title("Peaking Equalizer Filter"), grid on
 
 % Plot results together
-figure(); hold on
+figure(); hold on, grid on
 plot(abs(FXs2));
 plot(abs(FXsw));
 ylabel('Sawtooth Magnitude')
 yyaxis right
+ax = gca
+ax.YColor = 'b';
 ylabel('Filter Magnitude')
 plot(f,abs(H));
 legend('Filtered Sawtooth', 'Initial Sawtooth', 'Filter Freq Response')
